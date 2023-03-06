@@ -1,0 +1,8 @@
+build/**
+dist/**
+.next/**
+node_modules
+.turbo
+.idea
+dist
+build

@@ -1,0 +1,27 @@
+{
+  "name": "@nikosdouvlis/js",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx turbo run build",
+    "clean": "npx turbo run clean",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "changeset": "npx changeset",
+    "version-packages": "npx changeset version",
+    "publish-packages": "npx changeset publish"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@changesets/cli": "^2.26.0",
+    "turbo": "^1.8.3",
+    "typescript": "^4.9.5"
+  }
+}
