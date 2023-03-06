@@ -1,0 +1,4 @@
+
+> @nikosdouvlis/lib2@1.0.0 clean
+> rm -rf ./dist
+
