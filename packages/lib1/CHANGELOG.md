@@ -1,5 +1,11 @@
 # @nikosdouvlis/lib1
 
+## 1.0.2
+
+### Patch Changes
+
+- 3c7a492: Add a new log
+
 ## 1.0.1
 
 ### Patch Changes
