@@ -15,7 +15,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "changeset": "npx changeset",
     "version-packages": "npx changeset version",
-    "publish-packages": "npx changeset publish"
+    "publish-packages": "npm run build &&  npx changeset publish"
   },
   "author": "",
   "license": "ISC",
