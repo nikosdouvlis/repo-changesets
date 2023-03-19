@@ -1,0 +1,17 @@
+name: learn-gh-actions
+run-name: ${{ github.actor }} is learning gh actions
+on:
+  pull_request:
+    types: [labeled]
+
+jobs:
+  vercel_preview:
+    if: ${{ github.event.label.name == 'preview-vercel' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm i -g bats
+      - run: bats -v
