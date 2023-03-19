@@ -1,5 +1,11 @@
 # @nikosdouvlis/lib1
 
+## 1.0.3
+
+### Patch Changes
+
+- 29270b1: Change the inital log
+
 ## 1.0.2
 
 ### Patch Changes
