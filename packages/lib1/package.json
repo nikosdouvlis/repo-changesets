@@ -1,6 +1,6 @@
 {
   "name": "@nikosdouvlis/lib1",
-  "version": "1.0.5",
+  "version": "1.0.6-staging.440ee22",
   "description": "",
   "main": "dist/index.js",
   "files": [

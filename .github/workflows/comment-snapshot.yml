@@ -1,0 +1,36 @@
+name: Snapshot version & release
+on:
+  issue_comment:
+    types: [ created ]
+jobs:
+  snapshot-version-release:
+    runs-on: ubuntu-latest
+    if: ${{ startsWith(github.event.comment.body, '!snapshot') }}
+    steps:
+      - name: Extract Snapshot Name
+        id: extract-name
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const body = context.payload.comment.body;
+            return { name: body.match(/!snapshot (.*)/)[1] || '' };
+      - name: Snapshot version
+        id: snapshot-version
+        run: npm run version:snapshot ${{ steps.extract-name.outputs.name }}
+      - name: Snapshot release
+        id: snapshot-release
+        run: npm run release:snapshot
+      - name: Post Comment with Result
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            console.log(steps.snapshot-version.outputs);
+            console.log(steps.snapshot-release.outputs);
+            const { owner, repo, number } = context.issue;
+            const author = context.payload.comment.user.login;
+            const result = "hello"
+            const body = `@${author} The snapshot version command ${result}.\n`;
+            const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+            await octokit.issues.createComment({ owner, repo, issue_number: number, body });
