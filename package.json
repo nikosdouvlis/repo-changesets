@@ -15,8 +15,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "changeset": "npx changeset",
     "version": "npx changeset version",
-    "version:snapshot": "npx changeset version --snapshot",
-    "version:staging": "npx changeset version --snapshot",
+    "version:snapshot": "npx changeset version --no-git-tag --snapshot snap",
+    "version:staging": "npx changeset version --no-git-tag --snapshot staging",
     "release": "npm run build && npx changeset publish && git push --follow-tags"
   },
   "author": "",
