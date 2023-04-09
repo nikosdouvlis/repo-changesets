@@ -14,13 +14,26 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-      - name: Setup NodeJS 18
+
+      - name: Setup NodeJS
         uses: actions/setup-node@v3
         with:
           node-version: 18
+
       - name: Install dependencies
         run: npm i
+
       - name: Create Release PR
+        id: changesets
         uses: changesets/action@v1
+        with:
+          title: Version Packages [latest]
+          commit: Version Packages [latest]
+          release: npm run publish-packages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Notify on success
+        if: steps.changesets.outputs.published == 'true'
+        run: echo "Published!"
