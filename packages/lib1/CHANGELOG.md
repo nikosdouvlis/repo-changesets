@@ -1,5 +1,11 @@
 # @nikosdouvlis/lib1
 
+## 1.0.5
+
+### Patch Changes
+
+- [#6](https://github.com/nikosdouvlis/repo-changesets/pull/6) [`344304c`](https://github.com/nikosdouvlis/repo-changesets/commit/344304cc3c7c71d3c6fb36e72e3b03af8bde6926) Thanks [@nikosdouvlis](https://github.com/nikosdouvlis)! - Made a new change for lib1
+
 ## 1.0.4
 
 ### Patch Changes
