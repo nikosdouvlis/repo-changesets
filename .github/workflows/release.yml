@@ -10,6 +10,7 @@ concurrency: ${{ github.workflow }}-${{ github.ref }}
 jobs:
   release:
     name: Release
+#    if: github.repository == 'clerkinc/javascript'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -28,7 +29,7 @@ jobs:
         uses: changesets/action@v1
         with:
           title: Version Packages [latest]
-          commit: Version Packages [latest]
+          commit: "chore(): Version packages [latest]"
           publish: npm run publish-packages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
