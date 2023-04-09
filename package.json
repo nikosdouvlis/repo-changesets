@@ -14,8 +14,10 @@
     "clean": "npx turbo run clean",
     "test": "echo \"Error: no test specified\" && exit 1",
     "changeset": "npx changeset",
-    "version-packages": "npx changeset version",
-    "publish-packages": "npm run build &&  npx changeset publish && git push --follow-tags"
+    "version": "npx changeset version",
+    "version:snapshot": "npx changeset version --snapshot",
+    "version:staging": "npx changeset version --snapshot",
+    "release": "npm run build && npx changeset publish && git push --follow-tags"
   },
   "author": "",
   "license": "ISC",
