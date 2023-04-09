@@ -1,5 +1,12 @@
 # @nikosdouvlis/lib3
 
+## 1.0.6
+
+### Patch Changes
+
+- Updated dependencies [[`1d21c6c`](https://github.com/nikosdouvlis/repo-changesets/commit/1d21c6ccaaff6afe8ed758c195311c14f61a332d)]:
+  - @nikosdouvlis/lib1@1.0.6
+
 ## 1.0.5
 
 ### Patch Changes
