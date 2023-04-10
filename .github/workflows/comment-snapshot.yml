@@ -42,6 +42,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const body = `${{ steps.list-versions.outputs.NIKOS }}\n`;
+            const { owner, repo, number } = context.issue;
             await github.rest.issues.createComment({ owner, repo, issue_number: number, body });
 
       - name: Snapshot release
