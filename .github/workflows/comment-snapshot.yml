@@ -60,6 +60,7 @@ jobs:
           comment-id: ${{ github.event.comment.id }}
           body: |
               
+              
               **Edit**:
               Hey @${{ github.event.comment.user.login }} - the snapshot version command generated the following package versions:
               ${{ steps.package-info.outputs.table }}
