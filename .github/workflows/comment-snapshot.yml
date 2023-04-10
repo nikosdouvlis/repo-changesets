@@ -35,23 +35,22 @@ jobs:
         id: list-versions
         run: |
           npx zx <<'EOF'
+          $.verbose = false
           const files = await glob(['packages/*/package.json']);
           const descriptors = files.map(async file => {
             const json = JSON.parse(await $`cat ${file}`)
             return { name: json.name, version: json.version };
           });
-          let res = JSON.stringify(await Promise.all(descriptors));
-          res = `NIKOS=${res}`
-          $`echo ${res} > $GITHUB_OUTPUT`
+          const res = JSON.stringify(await Promise.all(descriptors));
+          $`echo NIKOS=${res} > $GITHUB_OUTPUT`
           EOF
 
-      - name: Post Comment with Result
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            console.log(`${{ steps.list-versions.outputs.NIKOS }}`)
-#            const body = JSON.parse(${{ steps.list-versions.outputs.NIKOS }});
+#      - name: Post Comment with Result
+#        uses: actions/github-script@v6
+#        with:
+#          github-token: ${{ secrets.GITHUB_TOKEN }}
+#          script: |
+#            const body = JSON.parse(`${{ steps.list-versions.outputs.NIKOS }}`);
 #            console.log(body);
 #            let table = `| Package | Version |\n| --- | --- |\n`;
 #            body.forEach(({ name, version }) => {
@@ -65,16 +64,20 @@ jobs:
 #        run: npm run release:snapshot
 #        env:
 #          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-#
-#      - name: Post Comment with Result
-#        uses: actions/github-script@v6
-#        with:
-#          github-token: ${{ secrets.GITHUB_TOKEN }}
-#          script: |
-#            console.log(${{ steps.snapshot-version.outputs }})
-#            console.log(${{ steps.snapshot-release.outputs.stdout }})
-#            const { owner, repo, number } = context.issue;
-#            const author = context.payload.comment.user.login;
-#            const result = "hello"
-#            const body = `@${author} The snapshot version command ${result}.\n`;
-#            await github.rest.issues.createComment({ owner, repo, issue_number: number, body });
+
+      - name: Post Comment with Result
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { owner, repo, number } = context.issue;
+            const author = context.payload.comment.user.login;
+            const packageInfo = JSON.parse(`${{ steps.list-versions.outputs.NIKOS }}`);
+            console.log(packageInfo);
+            let table = `| Package | Version |\n| --- | --- |\n`;
+            body.forEach(({ name, version }) => {
+              table += `| ${name} | ${version} |\n`;
+            });
+            console.log(table)
+            const body = `@${author} The snapshot version command \n ${table}.\n`;
+            await github.rest.issues.createComment({ owner, repo, issue_number: number, body });
