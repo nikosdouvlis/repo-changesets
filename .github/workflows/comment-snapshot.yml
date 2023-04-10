@@ -36,13 +36,13 @@ jobs:
         run: |
           npx zx <<'EOF'
           $.verbose = false
-          let table = `| Package | Version |\n| ------- | ------- |`
-          for (const file of await glob(['packages/*/package.json'])) {
-          const json = JSON.parse(await $`cat ${file}`)
-          const line = `\n| ${json.name} | ${json.version} |`
-          table += line
-          }
-          $`echo "NIKOS=\"${table}\"" >> $GITHUB_OUTPUT`
+          const files = await glob(['packages/*/package.json']);
+          const descriptors = files.map(async file => {
+            const json = JSON.parse(await $`cat ${file}`)
+            return { name: json.name, version: json.version };
+          });
+          const res = JSON.stringify(await Promise.all(descriptors));
+          $`echo "NIKOS=${res}" >> $GITHUB_OUTPUT`
           EOF
 
       - name: Post Comment with Result
