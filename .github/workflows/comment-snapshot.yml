@@ -10,7 +10,7 @@ concurrency: ${{ github.workflow }}-${{ github.ref }}
 jobs:
   snapshot-version-release:
     name: PR comment
-#    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '!snapshot')
+    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '!snapshot')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout pull request
@@ -45,25 +45,11 @@ jobs:
           $`echo NIKOS=${res} > $GITHUB_OUTPUT`
           EOF
 
-#      - name: Post Comment with Result
-#        uses: actions/github-script@v6
-#        with:
-#          github-token: ${{ secrets.GITHUB_TOKEN }}
-#          script: |
-#            const body = JSON.parse(`${{ steps.list-versions.outputs.NIKOS }}`);
-#            console.log(body);
-#            let table = `| Package | Version |\n| --- | --- |\n`;
-#            body.forEach(({ name, version }) => {
-#              table += `| ${name} | ${version} |\n`;
-#            });
-#            const { owner, repo, number } = context.issue;
-#            await github.rest.issues.createComment({ owner, repo, issue_number: number, body: table });
-
-#      - name: Snapshot release
-#        id: snapshot-release
-#        run: npm run release:snapshot
-#        env:
-#          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Snapshot release
+        id: snapshot-release
+        run: npm run release:snapshot
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Post Comment with Result
         uses: actions/github-script@v6
@@ -78,5 +64,5 @@ jobs:
             let snippets = ``;
             packageInfo.forEach(({ name, version }) => { snippets += `\`\`\`sh\n# ${name}\nnpm i ${name}@${version}\n\`\`\`\n` });
             const body = `Hey @${author} - the snapshot version command generated the following package versions:\n${table}
-            Tip: use the snippet copy button below to quick install the required packages:\n${snippets}.`;
+            Tip: use the snippet copy button below to quick install the required packages.\n${snippets}`;
             await github.rest.issues.createComment({ owner, repo, issue_number: number, body });
