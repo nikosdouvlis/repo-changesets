@@ -42,7 +42,7 @@ jobs:
             return { name: json.name, version: json.version };
           });
           const res = JSON.stringify(await Promise.all(descriptors));
-          $`echo "NIKOS=${res}" > $GITHUB_OUTPUT`
+          $`echo "NIKOS={res}" > $GITHUB_OUTPUT`
           EOF
 
       - name: Post Comment with Result
