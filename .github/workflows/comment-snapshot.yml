@@ -45,13 +45,13 @@ jobs:
             const fs = require('fs');
             const files = await (await glob.create('./packages/*/package.json')).glob();
             const descriptors = files.map(file => {
-              const { name, version } = JSON.parse(fs.readFileSync(file, 'utf8'));
+            const { name, version } = JSON.parse(fs.readFileSync(file, 'utf8'));
               return { name, version };
             });
-                            
+            
             let table = `| Package | Version |\n| --- | --- |\n`;
             descriptors.forEach(({ name, version }) => { table += `| ${name} | ${version} |\n` });
-            const snippets = descriptors.map(({ name, version }) => `\`\`\`sh\n# ${name}\nnpm i ${name}@${version}\n\`\`\`` }).join('\n');
+            const snippets = descriptors.map(({ name, version }) => `\`\`\`sh\n# ${name}\nnpm i ${name}@${version}\n\`\`\``).join('\n');
             
             return { table, snippets };
       - name: Update Comment
