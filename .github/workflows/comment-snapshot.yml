@@ -31,6 +31,19 @@ jobs:
         id: snapshot-version
         run: npm run version:snapshot ${{ steps.extract-name.outputs.name }}
 
+      - name: List versions
+        id: list-versions
+        run: |
+          echo "NIKOS=$(./scripts/ls-packages.mjs)" >> $GITHUB_OUTPUT
+
+      - name: Post Comment with Result
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const body = `${{ steps.list-versions.outputs.NIKOS }}\n`;
+            await github.rest.issues.createComment({ owner, repo, issue_number: number, body });
+
       - name: Snapshot release
         id: snapshot-release
         run: npm run release:snapshot

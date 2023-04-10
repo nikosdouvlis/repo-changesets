@@ -1,3 +1,3 @@
 export const constants = {
-    ChangesetConfigFile: '.changeset/config.json'
+    ChangesetConfigFile: '.changeset/config.json',
 }
