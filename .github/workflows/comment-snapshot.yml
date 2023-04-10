@@ -24,9 +24,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install dependencies
-        run: ls .changeset/
-
       - name: Snapshot version
         id: snapshot-version
         run: npm run version:snapshot ${{ steps.extract-name.outputs.name }}
@@ -34,6 +31,8 @@ jobs:
       - name: Snapshot release
         id: snapshot-release
         run: npm run release:snapshot
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Post Comment with Result
         uses: actions/github-script@v6
