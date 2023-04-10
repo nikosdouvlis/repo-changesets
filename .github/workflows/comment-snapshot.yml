@@ -42,7 +42,7 @@ jobs:
           });
           const res = JSON.stringify(await Promise.all(descriptors));
           console.log(res);
-          $`echo "NIKOS=${res}" > $GITHUB_OUTPUT`
+          $'echo "NIKOS=' + res + '"> $GITHUB_OUTPUT'
           EOF
 
       - name: Post Comment with Result
