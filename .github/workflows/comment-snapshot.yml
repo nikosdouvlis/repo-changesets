@@ -1,36 +1,45 @@
 name: Snapshot version & release
+run-name: Snapshot version & release
+
 on:
   issue_comment:
-    types: [ created ]
+    types: [created]
+
 jobs:
   snapshot-version-release:
+    name: PR comment
+    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '!snapshot')
     runs-on: ubuntu-latest
-    if: ${{ startsWith(github.event.comment.body, '!snapshot') }}
     steps:
-      - name: Extract Snapshot Name
-        id: extract-name
-        uses: actions/github-script@v5
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const body = context.payload.comment.body;
-            return { name: body.match(/!snapshot (.*)/)[1] || '' };
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install dependencies
+        run: ls .changeset/
+
       - name: Snapshot version
         id: snapshot-version
         run: npm run version:snapshot ${{ steps.extract-name.outputs.name }}
+
       - name: Snapshot release
         id: snapshot-release
         run: npm run release:snapshot
+
       - name: Post Comment with Result
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            console.log(steps.snapshot-version.outputs);
-            console.log(steps.snapshot-release.outputs);
             const { owner, repo, number } = context.issue;
             const author = context.payload.comment.user.login;
             const result = "hello"
             const body = `@${author} The snapshot version command ${result}.\n`;
-            const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
-            await octokit.issues.createComment({ owner, repo, issue_number: number, body });
+            await github.rest.issues.createComment({ owner, repo, issue_number: number, body });

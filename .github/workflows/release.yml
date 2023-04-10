@@ -1,4 +1,5 @@
-name: Release
+name: Prepare "Version Packages" PR
+run-name: prepare-version-packages-pr
 
 on:
   push:
