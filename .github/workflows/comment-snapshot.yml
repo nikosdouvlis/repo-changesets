@@ -50,15 +50,15 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            console.log(${{ steps.list-versions.outputs.NIKOS }})
-            const body = JSON.parse(${{ steps.list-versions.outputs.NIKOS }});
-            console.log(body);
-            let table = `| Package | Version |\n| --- | --- |\n`;
-            body.forEach(({ name, version }) => {
-              table += `| ${name} | ${version} |\n`;
-            });
-            const { owner, repo, number } = context.issue;
-            await github.rest.issues.createComment({ owner, repo, issue_number: number, body: table });
+            console.log(`${{ steps.list-versions.outputs.NIKOS }}`)
+#            const body = JSON.parse(${{ steps.list-versions.outputs.NIKOS }});
+#            console.log(body);
+#            let table = `| Package | Version |\n| --- | --- |\n`;
+#            body.forEach(({ name, version }) => {
+#              table += `| ${name} | ${version} |\n`;
+#            });
+#            const { owner, repo, number } = context.issue;
+#            await github.rest.issues.createComment({ owner, repo, issue_number: number, body: table });
 
 #      - name: Snapshot release
 #        id: snapshot-release
