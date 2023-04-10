@@ -4,13 +4,11 @@ run-name: snapshot-version-release
 on:
   issue_comment:
     types: [created]
-  pull_request:
-    types: [labeled]
 
 jobs:
   snapshot-version-release:
     name: PR comment
-    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '!snapshot')
+#    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '!snapshot')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout pull request
@@ -34,6 +32,7 @@ jobs:
       - name: List versions
         id: list-versions
         run: |
+          ls -la
           echo "NIKOS=$(./scripts/ls-packages.mjs)" >> $GITHUB_OUTPUT
 
       - name: Post Comment with Result
