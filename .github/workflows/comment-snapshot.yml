@@ -50,7 +50,8 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const body = JSON.parse(`${{ steps.list-versions.outputs.NIKOS }}`);
+            console.log({{ steps.list-versions.outputs.NIKOS }})
+            const body = JSON.parse(`{{ steps.list-versions.outputs.NIKOS }}`);
             console.log(body);
             let table = `| Package | Version |\n| --- | --- |\n`;
             body.forEach(({ name, version }) => {
