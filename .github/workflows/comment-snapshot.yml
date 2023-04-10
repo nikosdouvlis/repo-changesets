@@ -5,6 +5,8 @@ on:
   issue_comment:
     types: [created]
 
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
 jobs:
   snapshot-version-release:
     name: PR comment
@@ -33,6 +35,9 @@ jobs:
         id: list-versions
         run: |
           ls -la
+          ls -la ./scripts
+          ./scripts/ls-packages.mjs
+          ./scripts/ls-packages.mjs >> $GITHUB_OUTPUT
           echo "NIKOS=$(./scripts/ls-packages.mjs)" >> $GITHUB_OUTPUT
 
       - name: Post Comment with Result
