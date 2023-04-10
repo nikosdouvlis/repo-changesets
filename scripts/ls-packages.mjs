@@ -1,17 +1,11 @@
 #!/usr/bin/env npx zx
 
 import 'zx/globals'
-$.verbose = false
-
-let table =
-`| Package | Version |
-| ------- | ------- |`
-
-const files = await glob(['packages/*/package.json'])
-for (const file of files) {
+const files = await glob(['packages/*/package.json']);
+const descriptors = files.map(async file => {
     const json = JSON.parse(await $`cat ${file}`)
-    const line = `\n| ${json.name} | ${json.version} |`
-    table += line
-}
-
-echo(table)
+    return { name: json.name, version: json.version };
+});
+let res = JSON.stringify(await Promise.all(descriptors));
+res = `"NIKOS=${res}"`
+$`echo ${res} > $GITHUB_OUTPUT`
