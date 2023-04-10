@@ -54,16 +54,17 @@ jobs:
             const snippets = descriptors.map(({ name, version }) => `\`\`\`sh\n# ${name}\nnpm i ${name}@${version}\n\`\`\``).join('\n');
             
             return { table, snippets };
+
       - name: Update Comment
         uses: peter-evans/create-or-update-comment@v3.0.0
         with:
           comment-id: ${{ github.event.comment.id }}
           body: |
-              **Edit**:
+              \n\n**Edit**:
               Hey @${{ github.event.comment.user.login }} - the snapshot version command generated the following package versions:
-              ${{ steps.package-info.outputs.results.table }}
+              ${{ steps.package-info.outputs.table }}
               Tip: use the snippet copy button below to quick install the required packages.
-              ${{ steps.package-info.outputs.results.snippets }}
+              ${{ steps.package-info.outputs.snippets }}
           reactions: heart
 
 #      - name: Post Comment with Result
