@@ -40,9 +40,9 @@ jobs:
             const json = JSON.parse(await $`cat ${file}`)
             return { name: json.name, version: json.version };
           });
-          const res = JSON.stringify(await Promise.all(descriptors));
-          console.log(res);
-          $'echo "NIKOS=' + res + '"> $GITHUB_OUTPUT'
+          let res = JSON.stringify(await Promise.all(descriptors));
+          res = `"NIKOS=${res}"`
+          $`echo ${res} > $GITHUB_OUTPUT`
           EOF
 
       - name: Post Comment with Result
