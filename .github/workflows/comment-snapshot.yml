@@ -50,8 +50,8 @@ jobs:
             });
                             
             let table = `| Package | Version |\n| --- | --- |\n`;
-            packageInfo.forEach(({ name, version }) => { table += `| ${name} | ${version} |\n` });
-            const snippets = packageInfo.map(({ name, version }) => { snippets += `\`\`\`sh\n# ${name}\nnpm i ${name}@${version}\n\`\`\`\n` }).join('');
+            descriptors.forEach(({ name, version }) => { table += `| ${name} | ${version} |\n` });
+            const snippets = descriptors.map(({ name, version }) => { snippets += `\`\`\`sh\n# ${name}\nnpm i ${name}@${version}\n\`\`\`\n` }).join('');
             
             return { table, snippets };
       - name: Update Comment
@@ -64,6 +64,7 @@ jobs:
               ${{ steps.package-info.outputs.results.table }}
               Tip: use the snippet copy button below to quick install the required packages.
               ${{ steps.package-info.outputs.results.snippets }}
+          reactions: heart
 
 #      - name: Post Comment with Result
 #        uses: actions/github-script@v6
