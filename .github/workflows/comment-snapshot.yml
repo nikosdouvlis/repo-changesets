@@ -35,9 +35,14 @@ jobs:
         id: list-versions
         run: |
           npx zx <<'EOF'
-          echo('hello this is a test');
-          const files = await glob(['packages/*/package.json'])
-          echo(files)
+          $.verbose = false
+          let table = `| Package | Version |\n| ------- | ------- |`
+          for (const file of await glob(['packages/*/package.json'])) {
+          const json = JSON.parse(await $`cat ${file}`)
+          const line = `\n| ${json.name} | ${json.version} |`
+          table += line
+          }
+          $`echo "NIKOS=\"${table}\"" >> $GITHUB_OUTPUT`
           EOF
 
       - name: Post Comment with Result
