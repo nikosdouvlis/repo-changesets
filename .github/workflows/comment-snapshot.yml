@@ -35,14 +35,14 @@ jobs:
         id: list-versions
         run: |
           npx zx <<'EOF'
-          $.verbose = false
           const files = await glob(['packages/*/package.json']);
           const descriptors = files.map(async file => {
             const json = JSON.parse(await $`cat ${file}`)
             return { name: json.name, version: json.version };
           });
           const res = JSON.stringify(await Promise.all(descriptors));
-          `echo "NIKOS=${res}" > $GITHUB_OUTPUT`
+          console.log(res);
+          $`echo "NIKOS=${res}" > $GITHUB_OUTPUT`
           EOF
 
       - name: Post Comment with Result
