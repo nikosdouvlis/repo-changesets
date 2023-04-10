@@ -75,7 +75,7 @@ jobs:
             const packageInfo = JSON.parse(`${{ steps.list-versions.outputs.NIKOS }}`);
             console.log(packageInfo);
             let table = `| Package | Version |\n| --- | --- |\n`;
-            body.forEach(({ name, version }) => {
+            packageInfo.forEach(({ name, version }) => {
               table += `| ${name} | ${version} |\n`;
             });
             console.log(table)
