@@ -27,13 +27,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Package info
+      - name: Extract snapshot name
         id: extract-snapshot-name
         uses: actions/github-script@v6
         with:
           script: |
-            const body = context.payload.comment.body;
-            const match = "!snapshot".match(/!snapshot (.*)/)
+            const match = context.payload.comment.body.match(/!snapshot (.*)/)
             const name = match && match[1] || '';
             const isKebabCase = name.match(/^[a-z]+(-[a-z]+)*$/)
             if(name && !isKebabCase) {
