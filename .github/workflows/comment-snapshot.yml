@@ -34,11 +34,11 @@ jobs:
       - name: List versions
         id: list-versions
         run: |
-          ls -la
-          ls -la ./scripts
-          ./scripts/ls-packages.mjs
-          ./scripts/ls-packages.mjs >> $GITHUB_OUTPUT
-          echo "NIKOS=$(./scripts/ls-packages.mjs)" >> $GITHUB_OUTPUT
+          npx zx <<'EOF'
+          echo('hello this is a test');
+          const files = await glob(['packages/*/package.json'])
+          echo(files)
+          EOF
 
       - name: Post Comment with Result
         uses: actions/github-script@v6
