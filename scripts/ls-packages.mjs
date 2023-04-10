@@ -1,4 +1,4 @@
-#!/usr/bin/env zx
+#!/usr/bin/env npx zx
 
 import 'zx/globals'
 $.verbose = false
