@@ -31,38 +31,56 @@ jobs:
         id: snapshot-version
         run: npm run version:snapshot ${{ steps.extract-name.outputs.name }}
 
-      - name: List versions
-        id: list-versions
-        run: |
-          npx zx <<'EOF'
-          $.verbose = false
-          const files = await glob(['packages/*/package.json']);
-          const descriptors = files.map(async file => {
-            const json = JSON.parse(await $`cat ${file}`)
-            return { name: json.name, version: json.version };
-          });
-          const res = JSON.stringify(await Promise.all(descriptors));
-          $`echo NIKOS=${res} > $GITHUB_OUTPUT`
-          EOF
-
       - name: Snapshot release
         id: snapshot-release
         run: npm run release:snapshot
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Post Comment with Result
+      - name: Package info
+        id: package-info
         uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const { owner, repo, number } = context.issue;
-            const author = context.payload.comment.user.login;
-            const packageInfo = JSON.parse(`${{ steps.list-versions.outputs.NIKOS }}`);
+            const fs = require('fs');
+            const files = await (await glob.create('./packages/*/package.json')).glob();
+            const descriptors = files.map(file => {
+              const { name, version } = JSON.parse(fs.readFileSync(file, 'utf8'));
+              return { name, version };
+            });
+                            
             let table = `| Package | Version |\n| --- | --- |\n`;
             packageInfo.forEach(({ name, version }) => { table += `| ${name} | ${version} |\n` });
-            let snippets = ``;
-            packageInfo.forEach(({ name, version }) => { snippets += `\`\`\`sh\n# ${name}\nnpm i ${name}@${version}\n\`\`\`\n` });
-            const body = `Hey @${author} - the snapshot version command generated the following package versions:\n${table}
-            Tip: use the snippet copy button below to quick install the required packages.\n${snippets}`;
-            await github.rest.issues.createComment({ owner, repo, issue_number: number, body });
+            const snippets = packageInfo.map(({ name, version }) => { snippets += `\`\`\`sh\n# ${name}\nnpm i ${name}@${version}\n\`\`\`\n` }).join('');
+            
+            return { table, snippets };
+      - name: Update Comment
+        uses: peter-evans/create-or-update-comment@v3.0.0
+        with:
+          comment-id: ${{ github.event.comment.id }}
+          body: |
+              **Edit**:
+              Hey @${{ github.event.comment.user.login }} - the snapshot version command generated the following package versions:
+              ${{ steps.package-info.outputs.results.table }}
+              Tip: use the snippet copy button below to quick install the required packages.
+              ${{ steps.package-info.outputs.results.snippets }}
+
+#      - name: Post Comment with Result
+#        uses: actions/github-script@v6
+#        with:
+#          github-token: ${{ secrets.GITHUB_TOKEN }}
+#          script: |
+#            const { owner, repo, number } = context.issue;
+#            const author = context.payload.comment.user.login;
+#            const packageInfo = JSON.parse(`${{ steps.package-info.outputs.NIKOS }}`);
+#            let table = `| Package | Version |\n| --- | --- |\n`;
+#            packageInfo.forEach(({ name, version }) => { table += `| ${name} | ${version} |\n` });
+#            const snippets = packageInfo.map(({ name, version }) => { snippets += `\`\`\`sh\n# ${name}\nnpm i ${name}@${version}\n\`\`\`\n` }).join('');
+#
+#            await github.rest.issues.createComment({
+#              owner: context.issue.owner,
+#              repo: context.issue.repo,
+#              issue_number: context.issue.number,
+#              body: `Hey @${author} - the snapshot version command generated the following package versions:\n${table}\n` +
+#                    `Tip: use the snippet copy button below to quick install the required packages.\n${snippets}`
+#            });
