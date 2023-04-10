@@ -1,6 +1,6 @@
 {
   "name": "@nikosdouvlis/lib3",
-  "version": "1.0.6-snap.1681088408660",
+  "version": "1.0.6",
   "description": "",
   "main": "dist/index.js",
   "files": [
@@ -12,7 +12,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@nikosdouvlis/lib1": "1.0.6-snap.1681088408660"
+    "@nikosdouvlis/lib1": "1.0.6"
   },
   "author": "",
   "license": "ISC"
