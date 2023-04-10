@@ -75,9 +75,9 @@ jobs:
             const packageInfo = JSON.parse(`${{ steps.list-versions.outputs.NIKOS }}`);
             console.log(packageInfo);
             let table = `| Package | Version |\n| --- | --- |\n`;
-            packageInfo.forEach(({ name, version }) => {
-              table += `| ${name} | ${version} |\n`;
-            });
-            console.log(table)
-            const body = `@${author} The snapshot version command \n ${table}.\n`;
+            packageInfo.forEach(({ name, version }) => { table += `| ${name} | ${version} |\n` });
+            let snippets = ``;
+            packageInfo.forEach(({ name, version }) => { snippets += `\`\`\`sh\nnpm i ${name}@${version}\`\`\`\n` });
+            const body = `Hey @${author} - the snapshot version command generated the following package versions:\n${table}
+            Tip: use the snippet copy button to quick copy the install command:\n${snippets}.`;
             await github.rest.issues.createComment({ owner, repo, issue_number: number, body });
