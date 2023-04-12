@@ -4,7 +4,7 @@
     "clean": {},
     "lint": {},
     "build": {
-      "dependsOn": ["clean","^build"]
+      "dependsOn": ["clean", "^build"]
     },
     "test": {
       "dependsOn": ["build"],
