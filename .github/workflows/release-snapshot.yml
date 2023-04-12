@@ -9,13 +9,10 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-    REPO: env.REPO
-
 jobs:
   snapshot-release:
     name: ${{ github.action }}
-    if: ${{ github.repository == $REPO && github.event.issue.pull_request && startsWith(github.event.comment.body, '!snapshot') }}
+    if: github.repository == "nikosdouvlis/repo-changesets" && github.event.issue.pull_request && startsWith(github.event.comment.body, '!snapshot')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout pull request

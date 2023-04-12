@@ -1,5 +1,5 @@
 name: Staging release
-run-name: ${{ github.action }} from ${{ github.ref_name }}
+run-name: Staging release from ${{ github.ref_name }}
 
 on:
   push:
@@ -13,7 +13,7 @@ concurrency:
 jobs:
   staging-release:
     name: ${{ github.action }}
-    if: github.repository == env.REPO
+    if: github.repository == "nikosdouvlis/repo-changesets"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
