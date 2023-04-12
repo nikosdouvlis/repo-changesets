@@ -1,6 +1,9 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@2.3.0/schema.json",
-  "changelog": ["./changelog.js"],
+  "changelog": [
+    "./changelog.js",
+    { "repo": "nikosdouvlis/repo-changesets" }
+  ],
   "commit": false,
   "fixed": [],
   "linked": [],
