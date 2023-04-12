@@ -1,6 +1,5 @@
 name: Snapshot release
-
-#run-name: {{ github.action }} by {{ github.actor }}
+run-name: ${{ github.action }} by ${{ github.actor }}
 
 on:
   issue_comment:
@@ -12,7 +11,7 @@ concurrency:
 
 jobs:
   snapshot-release:
-    name: {{ github.action }}
+    name: ${{ github.action }}
     if: github.repository == env.REPO && github.event.issue.pull_request && startsWith(github.event.comment.body, '!snapshot')
     runs-on: ubuntu-latest
     steps:

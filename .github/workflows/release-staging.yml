@@ -1,6 +1,5 @@
 name: Staging release
-
-#run-name: {{ github.action }} from {{ github.ref_name }}
+run-name: ${{ github.action }} from ${{ github.ref_name }}
 
 on:
   push:
@@ -13,7 +12,7 @@ concurrency:
 
 jobs:
   staging-release:
-    name: {{ github.action }}
+    name: ${{ github.action }}
     if: github.repository == env.REPO
     runs-on: ubuntu-latest
     steps:
