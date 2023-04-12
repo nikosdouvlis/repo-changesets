@@ -12,7 +12,6 @@ concurrency:
 
 jobs:
   staging-release:
-    name: ${{ github.action }}
     if: ${{ github.repository == 'nikosdouvlis/repo-changesets' }}
     runs-on: ubuntu-latest
     steps:
