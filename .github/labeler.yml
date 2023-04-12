@@ -1,43 +1,46 @@
 # See https://github.com/actions/labeler
 
-example:
-  - examples/**/*
+backend:
+  - packages/backend/**
 
-"🚨 action":
+chrome-extension:
+  - packages/chrome-extension/**
+
+clerk-js:
+  - packages/clerk-js/**
+
+expo:
+  - packages/expo/**
+
+fastify:
+  - packages/fastify/**
+
+gatsby:
+  - packages/gatsby-plugin-clerk/**
+
+localizations:
+  - packages/localizations/**
+
+nextjs:
+  - packages/nextjs/**
+
+react:
+  - packages/react/**
+
+remix:
+  - packages/remix/**
+
+sdk-node:
+  - packages/sdk-node/**
+
+themes:
+  - packages/themes/**
+
+types:
+  - packages/types/**
+
+playground:
+  - playground/**
+
+actions:
   - .github/workflows/**
-
-lib1:
-  - packages/lib1/**
-
-lib2:
-  - packages/lib1/**
-
-lib3:
-  - packages/lib3/**
-
-create-astro:
-  - packages/create-astro/**
-
-markdown:
-  - packages/markdown/**
-
-integration:
-  - packages/integrations/**
-
-framework-lit:
-  - packages/integrations/lit/**
-
-framework-preact:
-  - packages/integrations/preact/**
-
-framework-react:
-  - packages/integrations/react/**
-
-framework-solid:
-  - packages/integrations/solid/**
-
-framework-svelte:
-  - packages/integrations/svelte/**
-
-framework-vue:
-  - packages/integrations/vue/**
