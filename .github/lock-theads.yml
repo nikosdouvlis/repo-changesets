@@ -1,4 +1,4 @@
-name: 'Lock stale PRs and Issues'
+name: 'Lock stale PRs and issues'
 
 on:
   workflow_dispatch:
