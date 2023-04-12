@@ -6,10 +6,13 @@ import { constants } from "./common.mjs";
 await $`npx json -I -f ${constants.ChangesetConfigFile} -e "this.changelog = false"`;
 
 const res = await $`npx changeset version --snapshot staging`;
-const noChanges = res.stderr.includes("No unreleased changesets found");
+const success = !res.stderr.includes("No unreleased changesets found");
+
 
 await $`git checkout HEAD -- ${constants.ChangesetConfigFile}`;
 
-if (noChanges) {
-  await $`exit 1`;
+if (success) {
+  echo("success=1");
+} else {
+  echo("success=0");
 }
