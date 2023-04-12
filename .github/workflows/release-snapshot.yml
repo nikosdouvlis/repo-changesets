@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: "https://registry.npmjs.org"
 
       - name: Install dependencies
         run: npm ci
@@ -43,7 +43,7 @@ jobs:
 
       - name: Version packages for snapshot
         id: version-packages
-        run: npm run version:snapshot ${{ steps.extract-snapshot-name.outputs.name }}  && [$? -eq 0] && echo "success=1" >> "$GITHUB_OUTPUT" || echo "success=0" >> "$GITHUB_OUTPUT"
+        run: npm run version:snapshot ${{ steps.extract-snapshot-name.outputs.name }} | tail -1 >> "$GITHUB_OUTPUT"
 
       - name: Snapshot release
         if: steps.version-packages.outputs.success == '1'
@@ -63,7 +63,7 @@ jobs:
               const { name, version } = JSON.parse(fs.readFileSync(file, 'utf8'));
               return { name, version };
             });
-            
+
             let table = `| Package | Version |\n| --- | --- |\n`;
             descriptors.forEach(({ name, version }) => { table += `| ${name} | ${version} |\n` });
             const snippets = descriptors.map(({ name, version }) => `\`\`\`sh\n# ${name}\nnpm i ${name}@${version}\n\`\`\``).join('\n');
