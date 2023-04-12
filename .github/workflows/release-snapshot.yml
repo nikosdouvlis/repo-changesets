@@ -43,7 +43,7 @@ jobs:
 
       - name: Version packages for snapshot
         id: version-packages
-        run: npm run version:snapshot ${{ steps.extract-snapshot-name.outputs.name }}  && [$? -eq 0] && echo "success=1" >> "$GITHUB_OUTPUT" || echo "success=0" >> "$GITHUB_OUTPUT"
+        run: npm run version:snapshot ${{ steps.extract-snapshot-name.outputs.name }}  ([ $? -eq 0 ] && echo "success=1" || echo "success=0") >> "$GITHUB_OUTPUT"
 
       - name: Snapshot release
         if: steps.version-packages.outputs.success == '1'
