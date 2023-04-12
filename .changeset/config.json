@@ -10,7 +10,7 @@
   "ignore": [],
   "snapshot": {
     "useCalculatedVersion": true,
-    "prereleaseTemplate": "nikos.{tag}.{commit}"
+    "prereleaseTemplate": "{tag}.{commit}"
   },
   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
     "onlyUpdatePeerDependentsWhenOutOfRange": true
