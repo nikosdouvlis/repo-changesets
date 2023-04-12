@@ -52,6 +52,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Package info
+        if: steps.version-packages.outputs.success == '1'
         id: package-info
         uses: actions/github-script@v6
         with:
@@ -70,12 +71,14 @@ jobs:
             core.setOutput('snippets', snippets);
 
       - name: Update Comment
+        if: steps.version-packages.outputs.success == '1'
         uses: peter-evans/create-or-update-comment@v3.0.0
         with:
           comment-id: ${{ github.event.comment.id }}
           reactions: heart
 
       - name: Create snapshot release comment
+        if: steps.version-packages.outputs.success == '1'
         uses: peter-evans/create-or-update-comment@v3.0.0
         with:
           issue-number: ${{ github.event.issue.number }}
