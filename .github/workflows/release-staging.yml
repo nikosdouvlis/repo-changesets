@@ -1,5 +1,6 @@
 name: Staging release
-run-name: {{ github.action }} from {{ github.ref_name }}
+
+#run-name: {{ github.action }} from {{ github.ref_name }}
 
 on:
   push:

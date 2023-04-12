@@ -1,5 +1,6 @@
 name: Snapshot release
-run-name: {{ github.action }} by {{ github.actor }}
+
+#run-name: {{ github.action }} by {{ github.actor }}
 
 on:
   issue_comment:
