@@ -1,5 +1,11 @@
 # @nikosdouvlis/lib1
 
+## 1.0.8
+
+### Patch Changes
+
+- This is a summary of the change ([#18](https://github.com/nikosdouvlis/repo-changesets/pull/18)) by [@nikosdouvlis](https://github.com/nikosdouvlis)
+
 ## 1.0.7
 
 ### Patch Changes
