@@ -57,7 +57,7 @@ jobs:
             const fs = require('fs');
             const files = await (await glob.create('./packages/*/package.json')).glob();
             const descriptors = files.map(file => {
-            const { name, version } = JSON.parse(fs.readFileSync(file, 'utf8'));
+              const { name, version } = JSON.parse(fs.readFileSync(file, 'utf8'));
               return { name, version };
             });
             
