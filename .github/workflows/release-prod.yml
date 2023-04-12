@@ -12,7 +12,7 @@ concurrency:
 jobs:
   release:
     name: Release
-    if: github.repository == "nikosdouvlis/repo-changesets"
+    if: github.repository == nikosdouvlis/repo-changesets
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
