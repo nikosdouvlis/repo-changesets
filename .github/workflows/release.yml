@@ -1,17 +1,18 @@
-name: Prepare "Version Packages" PR
-run-name: prepare-version-packages-pr
+name: Production release PR
 
 on:
   push:
     branches:
       - main
 
-concurrency: ${{ github.workflow }}-${{ github.ref }}
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   release:
     name: Release
-#    if: github.repository == 'clerkinc/javascript'
+    if: github.repository == env.REPO
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo

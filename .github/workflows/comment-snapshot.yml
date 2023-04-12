@@ -1,16 +1,18 @@
-name: Snapshot version & release
-run-name: snapshot-version-release
+name: Snapshot release
+run-name: {{ github.action }} by {{ github.actor }}
 
 on:
   issue_comment:
     types: [created]
 
-concurrency: ${{ github.workflow }}-${{ github.ref }}
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  snapshot-version-release:
-    name: PR comment
-    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '!snapshot')
+  snapshot-release:
+    name: {{ github.action }}
+    if: github.repository == env.REPO && github.event.issue.pull_request && startsWith(github.event.comment.body, '!snapshot')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout pull request
@@ -40,12 +42,10 @@ jobs:
             }
             core.setOutput('name', name);
 
-      - name: Snapshot version
-        id: snapshot-version
+      - name: Version packages for snapshot
         run: npm run version:snapshot ${{ steps.extract-snapshot-name.outputs.name }}
 
       - name: Snapshot release
-        id: snapshot-release
         run: npm run release:snapshot
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
