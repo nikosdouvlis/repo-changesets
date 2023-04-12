@@ -1,5 +1,11 @@
 # @nikosdouvlis/lib1
 
+## 1.0.7
+
+### Patch Changes
+
+- test 1 ([#15](https://github.com/nikosdouvlis/repo-changesets/pull/15)) by [@nikosdouvlis](https://github.com/nikosdouvlis)
+
 ## 1.0.6
 
 ### Patch Changes
