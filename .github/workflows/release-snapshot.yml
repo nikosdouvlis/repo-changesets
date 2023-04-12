@@ -42,9 +42,11 @@ jobs:
             core.setOutput('name', name);
 
       - name: Version packages for snapshot
-        run: npm run version:snapshot ${{ steps.extract-snapshot-name.outputs.name }}
+        id: version-packages
+        run: npm run version:snapshot ${{ steps.extract-snapshot-name.outputs.name }}  && [$? -eq 0] && echo "success=1" >> "$GITHUB_OUTPUT" || echo "success=0" >> "$GITHUB_OUTPUT"
 
       - name: Snapshot release
+        if: steps.version-packages.outputs.success == '1'
         run: npm run release:snapshot
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
