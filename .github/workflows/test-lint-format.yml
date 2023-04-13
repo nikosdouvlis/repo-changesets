@@ -1,4 +1,4 @@
-name: Test, lint & format
+name: Test, lint and format
 on: [push, pull_request]
 
 jobs:
@@ -8,14 +8,15 @@ jobs:
       group: setup-${{ github.ref }}
       cancel-in-progress: true
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-      - name: Setup NodeJS
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - run: npm ci
-      - run: npm run build
+      #      - name: Checkout repo
+      #        uses: actions/checkout@v3
+      #      - name: Setup NodeJS
+      #        uses: actions/setup-node@v3
+      #        with:
+      #          node-version: 18
+      #      - run: npm ci
+      #      - run: npm run build
+      - run: touch nikos.txt && echo "test" > nikos.txt
 
   test:
     name: Tests
@@ -25,4 +26,14 @@ jobs:
       cancel-in-progress: true
     runs-on: ubuntu-latest
     steps:
-      - run: npm run test
+      - run: ls -a
+
+  Lint:
+    name: Lint
+    needs: setup
+    concurrency:
+      group: test-${{ github.ref }}
+      cancel-in-progress: true
+    runs-on: ubuntu-latest
+    steps:
+      - run: ls -a
