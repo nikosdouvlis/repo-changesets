@@ -12,7 +12,7 @@
   "scripts": {
     "build": "npx turbo run build",
     "clean": "npx turbo run clean",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\"",
     "changeset": "npx changeset",
     "version": "npx changeset version",
     "version:snapshot": "./scripts/snapshot.mjs",
