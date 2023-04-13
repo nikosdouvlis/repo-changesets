@@ -8,14 +8,15 @@ jobs:
       group: setup-${{ github.ref }}
       cancel-in-progress: true
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-      - name: Setup NodeJS
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - run: npm ci
-      - run: npm run build
+#      - name: Checkout repo
+#        uses: actions/checkout@v3
+#      - name: Setup NodeJS
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: 18
+#      - run: npm ci
+#      - run: npm run build
+      - run: touch nikos.txt && echo "test" > nikos.txt
 
   test:
     name: Tests
